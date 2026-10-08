@@ -39,3 +39,37 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# accidental duplicate clone of this repo nested at ./EduMathAI (stale snapshot
+# with its own .git / node_modules / .next). It shadows tooling - see tsconfig
+# `exclude` and eslint.config.mjs globalIgnores. Do not commit it.
+/EduMathAI/
+# Local database
+*.db
+*.db-shm
+*.db-wal
+
+# Logs and debug output
+*.log
+*.txt
+
+# Local tools / temporary files
+.playwright-mcp/
+.serena/
+scratch/
+
+# Generated uploads
+public/uploads/
+
+# Local scripts / temporary automation
+mass_implement*.js
+update_*.js
+test-*.mjs
+
+# Build / local output
+build-out.txt
+lint-output.txt
+tsc-output.txt
+tsc-out.txt
+tsc-check.txt
+test-out.txt

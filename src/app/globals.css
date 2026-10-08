@@ -1,26 +1,537 @@
 @import "tailwindcss";
+@variant dark (&:where(.dark, .dark *));
 
+/* ============================================================
+   EduMathAI – Premium Design System
+   ============================================================ */
+
+/* ---------- CSS Custom Properties ---------- */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Brand Palette — Primary #4A90E2 · Secondary #7C3AED · Accent #06B6D4 */
+  --brand-primary: 74 144 226;    /* #4A90E2 (sky / education blue) */
+  --brand-secondary: 124 58 237; /* #7C3AED (violet-600) */
+  --brand-accent: 6 182 212;     /* #06B6D4 (cyan-500) */
+  --brand-success: 34 197 94;    /* green-500 */
+  --brand-warning: 234 179 8;    /* yellow-500 */
+  --brand-danger: 239 68 68;     /* red-500 */
+
+  /* Hex forms (used by gradients / background layers) */
+  --brand-primary-hex: #4a90e2;
+  --brand-secondary-hex: #7c3aed;
+  --brand-accent-hex: #06b6d4;
+
+  /* Pastel surfaces — soft educational environment (light sky blue +
+     soft lavender + warm cream + white highlights) */
+  --pastel-sky: #eaf6ff;        /* Main background — very light sky/ice blue */
+  --pastel-blue: #ddf1ff;       /* Secondary surface — soft light blue */
+  --pastel-lavender: #f0edff;   /* Secondary surface — very light lavender */
+  --pastel-cream: #fff8e7;      /* Secondary surface — soft warm cream */
+  --ink-navy: #243b53;          /* Text — dark navy */
+
+  /* Semantic colors */
+  --background: #eaf6ff;      /* Background  #EAF6FF */
+  --foreground: #243b53;      /* Text        #243B53 */
+  --surface: #f6faff;         /* Cards       — sky-tinted white */
+  --surface-secondary: #ddf1ff;
+  --text-secondary: #64748b;  /* Secondary text #64748B */
+  --border: #d7e6f5;
+  --border-strong: #b9d2ea;
+  --muted: #64748b;
+
+  /* ---------- Site background image ---------- */
+  --bg-image: url("/backgrounds/dark-classroom-bg.jpg");
+  /* Soft airy veil so text/cards/buttons stay readable over the photo.
+     Kept light (~0.32) so the classroom photo stays clearly visible
+     instead of being washed into pure white. */
+  --bg-overlay: rgba(10, 15, 35, 0.65);
+  /* Dark navy overlay painted over the photo so text stays readable */
+  --bg-tint: linear-gradient(
+    180deg,
+    rgba(8, 12, 30, 0.55) 0%,
+    rgba(8, 12, 30, 0.40) 40%,
+    rgba(8, 12, 30, 0.50) 70%,
+    rgba(8, 12, 30, 0.65) 100%
+  );
+  /* Translucent fills for full-width page bands (light mode) */
+  --band-white: rgba(246, 250, 255, 0.82);
+  --band-slate: rgba(234, 246, 255, 0.78);
+
+  /* Shadows */
+  --shadow-xs: 0 1px 2px 0 rgb(36 59 83 / 0.06);
+  --shadow-sm: 0 1px 3px 0 rgb(36 59 83 / 0.10), 0 1px 2px -1px rgb(36 59 83 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(36 59 83 / 0.10), 0 2px 4px -2px rgb(36 59 83 / 0.08);
+  --shadow-lg: 0 10px 15px -3px rgb(36 59 83 / 0.10), 0 4px 6px -4px rgb(36 59 83 / 0.08);
+  --shadow-xl: 0 20px 25px -5px rgb(36 59 83 / 0.12), 0 8px 10px -6px rgb(36 59 83 / 0.08);
+  --shadow-brand: 0 10px 40px -10px rgb(74 144 226 / 0.40);
+
+  /* Radii */
+  --radius-sm: 0.375rem;
+  --radius: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-full: 9999px;
+
+  /* Typography */
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  /* Transitions */
+  --transition-base: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-spring: 350ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
+/* Dark mode overrides — system preference */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #0a0f1e;
+    --foreground: #f1f5f9;
+    --surface: #0f172a;
+    --surface-secondary: #1e293b;
+    --border: #1e293b;
+    --border-strong: #334155;
+    --muted: #94a3b8;
+    --bg-overlay: rgba(10, 15, 30, 0.9);
+    --bg-tint: linear-gradient(
+      180deg,
+      rgba(191, 219, 254, 0.06) 0%,
+      rgba(255, 255, 255, 0) 45%,
+      rgba(255, 251, 235, 0.06) 70%,
+      rgba(233, 213, 255, 0.05) 100%
+    );
+    --band-white: rgba(15, 23, 42, 0.86);
+    --band-slate: rgba(2, 6, 23, 0.88);
   }
 }
 
+/* Dark mode overrides — class-based (.dark on <html>) */
+html.dark {
+  color-scheme: dark;
+  --background: #0a0f1e;
+  --foreground: #f1f5f9;
+  --surface: #0f172a;
+  --surface-secondary: #1e293b;
+  --border: #1e293b;
+  --border-strong: #334155;
+  --muted: #94a3b8;
+  --text-secondary: #94a3b8;
+  --bg-overlay: rgba(10, 15, 30, 0.88);
+  --bg-tint: linear-gradient(
+    180deg,
+    rgba(191, 219, 254, 0.06) 0%,
+    rgba(255, 255, 255, 0) 45%,
+    rgba(255, 251, 235, 0.06) 70%,
+    rgba(233, 213, 255, 0.05) 100%
+  );
+  --band-white: rgba(15, 23, 42, 0.86);
+  --band-slate: rgba(2, 6, 23, 0.88);
+  color: #f1f5f9;
+}
+
+/* Force all text to be white/light in dark mode */
+html.dark body,
+html.dark p,
+html.dark h1,
+html.dark h2,
+html.dark h3,
+html.dark h4,
+html.dark h5,
+html.dark h6,
+html.dark span:not([class*="bg-"]),
+html.dark label,
+html.dark li,
+html.dark td,
+html.dark th {
+  color: inherit;
+}
+
+html.dark body {
+  color: #f1f5f9;
+  background-color: #0a0f1e;
+}
+
+/* ---------- Responsive background tuning ---------- */
+/* Small screens: veil a little harder so text stays crisp on narrow viewports. */
+@media (max-width: 767px) {
+  :root {
+    --bg-overlay: rgba(248, 251, 255, 0.68);
+  }
+}
+
+/* Wide screens: let a touch more of the photo through. */
+@media (min-width: 1536px) {
+  :root {
+    --bg-overlay: rgba(248, 251, 255, 0.56);
+  }
+}
+
+/* ---------- Tailwind v4 Theme Tokens ---------- */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+
+  /* Named brand utilities: bg-brand-primary / text-brand-accent / … */
+  --color-brand-primary: #2563eb;
+  --color-brand-secondary: #7c3aed;
+  --color-brand-accent: #06b6d4;
+  --color-brand-card: #ffffff;
+  --color-brand-muted: #64748b;
+}
+
+/*
+  Palette remap — every existing `indigo-*`, `purple-*` and `pink-*` utility now
+  resolves to the requested theme instead of the stock Tailwind hues:
+    indigo → Primary   #2563EB (blue-600 family)
+    purple → Secondary #7C3AED (violet-600 family)
+    pink   → Accent    #06B6D4 (cyan-500 family)
+  Existing gradients (indigo → purple → pink) therefore render as
+  Primary → Secondary → Accent with no component changes.
+*/
+@theme {
+  --color-indigo-50: #eff6ff;
+  --color-indigo-100: #dbeafe;
+  --color-indigo-200: #bfdbfe;
+  --color-indigo-300: #93c5fd;
+  --color-indigo-400: #60a5fa;
+  --color-indigo-500: #3b82f6;
+  --color-indigo-600: #2563eb;
+  --color-indigo-700: #1d4ed8;
+  --color-indigo-800: #1e40af;
+  --color-indigo-900: #1e3a8a;
+  --color-indigo-950: #172554;
+
+  --color-purple-50: #f5f3ff;
+  --color-purple-100: #ede9fe;
+  --color-purple-200: #ddd6fe;
+  --color-purple-300: #c4b5fd;
+  --color-purple-400: #a78bfa;
+  --color-purple-500: #8b5cf6;
+  --color-purple-600: #7c3aed;
+  --color-purple-700: #6d28d9;
+  --color-purple-800: #5b21b6;
+  --color-purple-900: #4c1d95;
+  --color-purple-950: #2e1065;
+
+  --color-pink-50: #ecfeff;
+  --color-pink-100: #cffafe;
+  --color-pink-200: #a5f3fc;
+  --color-pink-300: #67e8f9;
+  --color-pink-400: #22d3ee;
+  --color-pink-500: #06b6d4;
+  --color-pink-600: #0891b2;
+  --color-pink-700: #0e7490;
+  --color-pink-800: #155e75;
+  --color-pink-900: #164e63;
+  --color-pink-950: #083344;
+
+  --color-cyan-50: #ecfeff;
+  --color-cyan-100: #cffafe;
+  --color-cyan-200: #a5f3fc;
+  --color-cyan-300: #67e8f9;
+  --color-cyan-400: #22d3ee;
+  --color-cyan-500: #06b6d4;
+  --color-cyan-600: #0891b2;
+  --color-cyan-700: #0e7490;
+  --color-cyan-800: #155e75;
+  --color-cyan-900: #164e63;
+  --color-cyan-950: #083344;
+
+  /* Text colours from the requested theme */
+  --color-slate-900: #172033;
+  --color-slate-500: #64748b;
+}
+
+/* ---------- Base Reset & Typography ---------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  /* Canvas fallback — also what you see if the photo fails to load */
+  background-color: var(--background);
+}
+
 body {
-  background: var(--background);
+  /* Transparent so the fixed photo layer below shows through */
+  background: transparent;
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  min-height: 100dvh;
+  overflow-x: hidden;
+}
+
+/* ---------- Responsive site background (photo + pastel tint + soft veil) ---------- */
+/* A fixed, viewport-filling layer painted behind every page.
+   Layer order (top → bottom): readability veil → pastel tint wash → photo.
+   The photo is never replaced or edited — the tint only warms the white
+   ground/desk area with cream + lavender and cools the sky with pastel blue. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color: var(--background);
+  background-image:
+    linear-gradient(var(--bg-overlay), var(--bg-overlay)),
+    var(--bg-tint),
+    var(--bg-image);
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  background-position: center center, center center, center center;
+  background-size: cover, cover, cover;
+}
+
+/* Small screens: the photo is 16:9, so crop toward the studying student. */
+@media (max-width: 767px) {
+  body::before {
+    background-position: center center, center center, 30% 45%;
+  }
+}
+
+/* Page shells (49x `min-h-screen … bg-slate-50`) must not paint over it.
+   Keep this list broad: every full-screen page wrapper stays transparent so
+   the single global classroom photo in body::before shows through. */
+.min-h-screen[class*="bg-slate-"],
+.min-h-screen[class*="bg-white"],
+.min-h-screen[class*="bg-[#"],
+.min-h[class*="bg-slate-"],
+body.bg-slate-50,
+body[class*="bg-slate-"],
+body[class*="bg-white"] {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+@media (prefers-color-scheme: dark) {
+  body.dark\:bg-slate-950,
+  .min-h-screen.dark\:bg-slate-950,
+  .min-h.dark\:bg-slate-950 {
+    background-color: transparent !important;
+    background-image: none !important;
+  }
+}
+
+/* Auth screens paint their own local photo panels — route them through the
+   same single global classroom image instead of a second copy. */
+.auth-local-bg-photo {
+  background-image: var(--bg-image) !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+}
+
+/*
+  Full-width bands stay tinted but translucent so the backdrop reads across the
+  whole site while dark text keeps a near-white surface behind it.
+*/
+section.bg-white {
+  background-color: var(--band-white);
+}
+section.bg-slate-50 {
+  background-color: var(--band-slate);
+}
+
+/* Improved focus styles for accessibility */
+:focus-visible {
+  outline: 2px solid rgb(var(--brand-primary));
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #334155;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+/* ---------- KaTeX Overrides ---------- */
+.katex {
+  font-size: 1.05em;
+}
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.5rem 0;
+}
+
+/* ---------- Utility Classes ---------- */
+
+/* Glassmorphism */
+.glass {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+.dark .glass {
+  background: rgba(15, 23, 42, 0.75);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.glass-subtle {
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Gradient text utility — Primary → Secondary → Accent */
+.gradient-text {
+  background: linear-gradient(135deg, #2563eb, #7c3aed, #06b6d4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Brand gradient backgrounds */
+.bg-brand-gradient {
+  background: linear-gradient(135deg, #2563eb 0%, #7c3aed 50%, #06b6d4 100%);
+}
+
+.bg-brand-soft {
+  background: linear-gradient(135deg, #eff6ff 0%, #f5f3ff 50%, #ecfeff 100%);
+}
+
+.dark .bg-brand-soft {
+  background: linear-gradient(135deg, #172554 0%, #2e1065 50%, #083344 100%);
+}
+
+/* Shadow utilities with brand colors */
+.shadow-brand {
+  box-shadow: var(--shadow-brand);
+}
+
+.shadow-indigo-glow {
+  box-shadow: 0 0 40px -10px rgb(37 99 235 / 0.5);
+}
+
+/* ---------- Animation Keyframes ---------- */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.7; }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes bounce-gentle {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-4px); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33%       { transform: translateY(-8px) rotate(1deg); }
+  66%       { transform: translateY(-4px) rotate(-1deg); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 20px -5px rgb(37 99 235 / 0.4); }
+  50%       { box-shadow: 0 0 40px -5px rgb(37 99 235 / 0.7); }
+}
+
+@keyframes progress-fill {
+  from { width: 0%; }
+}
+
+/* Animation utility classes */
+.animate-fade-in    { animation: fadeIn var(--transition-smooth) ease both; }
+.animate-slide-up   { animation: slideUp 400ms cubic-bezier(0.4, 0, 0.2, 1) both; }
+.animate-slide-down { animation: slideDown 300ms cubic-bezier(0.4, 0, 0.2, 1) both; }
+.animate-scale-in   { animation: scaleIn 200ms cubic-bezier(0.4, 0, 0.2, 1) both; }
+.animate-shimmer    { 
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease infinite; 
+}
+.animate-float      { animation: float 4s ease-in-out infinite; }
+.animate-glow-pulse { animation: glow-pulse 2s ease-in-out infinite; }
+.animate-bounce-gentle { animation: bounce-gentle 2s ease-in-out infinite; }
+.animate-spin-slow  { animation: spin-slow 8s linear infinite; }
+.animate-pulse-soft { animation: pulse-soft 2s ease-in-out infinite; }
+
+/* Staggered animation delays */
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+
+/* ---------- Card & Surface styles ---------- */
+
+.card-hover {
+  transition: transform var(--transition-smooth), box-shadow var(--transition-smooth);
+}
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-xl);
+}
+
+/* Progress bar animation */
+.progress-animated > div {
+  animation: progress-fill 800ms cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* ---------- Math content styling ---------- */
+.math-content {
+  font-family: var(--font-mono);
+  letter-spacing: 0.02em;
+}
+
+/* ---------- Print styles ---------- */
+@media print {
+  .no-print { display: none !important; }
+  body { background: white; color: black; }
 }

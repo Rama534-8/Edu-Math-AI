@@ -1,5 +1,5 @@
 {
-  "name": "temp-app",
+  "name": "edumathai",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,18 +9,36 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@google/genai": "^2.24.0",
+    "bcrypt": "^6.0.0",
+    "better-sqlite3": "^13.0.3",
+    "canvas-confetti": "^1.9.4",
+    "jose": "^6.2.12",
+    "katex": "^0.18.9",
+    "lucide-react": "^1.48.0",
     "next": "16.3.6",
     "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "react-dom": "19.2.8",
+    "uuid": "^14.0.2"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/bcrypt": "^6.0.0",
+    "@types/better-sqlite3": "^9.6.0",
+    "@types/canvas-confetti": "^1.9.0",
+    "@types/katex": "^0.16.8",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/uuid": "^10.0.0",
     "eslint": "^9",
     "eslint-config-next": "16.3.6",
+    "pdf-parse": "^2.4.5",
+    "pdfjs-dist": "^4.0.379",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "allowScripts": {
+    "pdf-parse@2.4.5": true
   }
 }
